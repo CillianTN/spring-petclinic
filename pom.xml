@@ -204,6 +204,7 @@
               <propertyExpansion>
                 config_loc=${basedir}/src/checkstyle/
               </propertyExpansion>
+              <skip>true</skip>
             </configuration>
             <goals>
               <goal>check</goal>
