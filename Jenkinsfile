@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -18,7 +14,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+                    archiveArtifacts artifacts: '**/target/*.war', allowEmptyArchive: true
                 }
             }
         }
@@ -38,8 +34,10 @@ pipeline {
             steps {
                 script {
                     sh """
-                    curl --user admin:admin -X POST http://40.71.19.193:8080/manager/text/undeploy?path=/petclinic
-                    curl --upload-file target/*.war http://admin:admin@40.71.19.193:8080/manager/text/deploy?path=/petclinic
+                    curl -u admin:admin -X POST http://40.71.19.193:8080/manager/text/undeploy?path=/petclinic
+                    """
+                    sh """
+                    curl -u admin:admin --upload-file ./target/petclinic.war http://40.71.19.193:8080/manager/text/deploy?path=/petclinic
                     """
                 }
             }
@@ -48,7 +46,7 @@ pipeline {
 
     post {
         always {
-            echo "Worked sucessfully A1 Lad."
+            echo "Build and Deployment process completed with status: ${currentBuild.result}"
         }
     }
 }
