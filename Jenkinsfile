@@ -33,8 +33,12 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    sh 'curl -u admin:admin -X POST http://40.71.19.193:8080/manager/text/undeploy?path=/petclinic'
-                    sh 'curl -u admin:admin --upload-file ./target/spring-petclinic-*.jar http://40.71.19.193:8080/manager/text/deploy?path=/petclinic'
+                    sh """
+                    curl -v -u admin:admin http://40.71.19.193:8080/manager/text/undeploy?path=/PetClinic
+                    """                    
+                    sh """
+                    curl -v -T ./target/spring-petclinic-*.jar http://40.71.19.193:8080/manager/text/deploy?path=/PetClinic -u admin:admin
+                    """
                 }
             }
         }
