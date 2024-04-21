@@ -30,11 +30,11 @@ pipeline {
             }
         }
 
-        stage('Deploy to Server') {
+        stage('Deploy to Tomcat') {
             steps {
                 script {
-                    sh 'scp ./target/spring-petclinic-*.jar admin@40.71.19.193:/opt/apps/'
-                    sh 'ssh admin@40.71.19.193 "pkill -f \'java.*spring-petclinic\' ; nohup java -jar /opt/apps/spring-petclinic-*.jar > /dev/null 2>&1 &"'
+                    sh 'curl -u admin:admin -X POST http://40.71.19.193:8080/manager/text/undeploy?path=/petclinic'
+                    sh 'curl -u admin:admin --upload-file ./target/spring-petclinic-*.jar http://40.71.19.193:8080/manager/text/deploy?path=/petclinic'
                 }
             }
         }
