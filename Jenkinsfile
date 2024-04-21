@@ -10,7 +10,9 @@ pipeline {
 
         stage('Build and Package') {
             steps {
-                sh 'mvn clean package'
+                timeout(time: 20, unit: 'MINUTES') {
+                    sh 'mvn clean package'
+                }
             }
             post {
                 success {
@@ -33,12 +35,8 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    sh """
-                    curl -u admin:admin -X POST http://40.71.19.193:8080/manager/text/undeploy?path=/petclinic
-                    """
-                    sh """
-                    curl -u admin:admin --upload-file ./target/petclinic.war http://40.71.19.193:8080/manager/text/deploy?path=/petclinic
-                    """
+                    sh 'curl -u admin:admin -X POST http://40.71.19.193:8080/manager/text/undeploy?path=/petclinic'
+                    sh 'curl -u admin:admin --upload-file ./target/petclinic.war http://40.71.19.193:8080/manager/text/deploy?path=/petclinic'
                 }
             }
         }
