@@ -10,13 +10,11 @@ pipeline {
 
         stage('Build and Package') {
             steps {
-                timeout(time: 20, unit: 'MINUTES') {
-                    sh 'mvn clean package'
-                }
+                sh 'mvn clean package'
             }
             post {
                 success {
-                    archiveArtifacts artifacts: '**/target/*.war', allowEmptyArchive: true
+                    archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
                 }
             }
         }
@@ -32,11 +30,11 @@ pipeline {
             }
         }
 
-        stage('Deploy to Tomcat') {
+        stage('Deploy to Server') {
             steps {
                 script {
-                    sh 'curl -u admin:admin -X POST http://40.71.19.193:8080/manager/text/undeploy?path=/petclinic'
-                    sh 'curl -u admin:admin --upload-file ./target/petclinic.war http://40.71.19.193:8080/manager/text/deploy?path=/petclinic'
+                    sh 'scp ./target/spring-petclinic-*.jar admin@40.71.19.193:/opt/apps/'
+                    sh 'ssh admin@40.71.19.193 "pkill -f \'java.*spring-petclinic\' ; nohup java -jar /opt/apps/spring-petclinic-*.jar > /dev/null 2>&1 &"'
                 }
             }
         }
