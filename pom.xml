@@ -36,7 +36,7 @@
     <spring-format.version>0.0.40</spring-format.version>
     
     <!-- SonarQube login credentials -->
-    <sonar.login>user-admin</sonar.login>
+    <sonar.login>admin</sonar.login>
     <sonar.password>admin123</sonar.password>
 
   </properties>
