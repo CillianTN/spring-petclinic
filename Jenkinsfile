@@ -33,8 +33,8 @@ pipeline {
         stage('Ansible') {
             steps {
                 script {
-                    ansiblePlaybook playbook: '/home/cillian.nolan/ansible-playbooks/deploy_to_tomcat.yml',
-                                    inventory: '/home/cillian.nolan/ansible-playbooks/inventory'
+                    ansiblePlaybook playbook: 'deploy_to_tomcat.yml',
+                                    inventory: 'inventory'
                 }
             }
         }
