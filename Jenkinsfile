@@ -32,10 +32,7 @@ pipeline {
 
         stage('Ansible') {
             steps {
-                script {
-                    //ansiblePlaybook playbook: 'deploy_to_tomcat.yml',
-                      //              inventory: 'inventory'
-                }
+                // No script block needed here, as it's currently empty
             }
         }
 
