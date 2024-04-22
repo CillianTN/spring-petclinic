@@ -30,11 +30,11 @@ pipeline {
             }
         }
 
-        stage('Ansible') {
-            steps {
-                // No script block needed here, as it's currently empty
-            }
-        }
+       // stage('Ansible') {
+         //   steps {
+                // 
+          //  }
+        //}
 
         stage('Deploy to Tomcat') {
             steps {
