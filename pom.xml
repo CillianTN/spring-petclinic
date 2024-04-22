@@ -37,7 +37,7 @@
     
     <!-- SonarQube login credentials -->
     <sonar.login>user-admin</sonar.login>
-    <sonar.password>admin123</sonar.password
+    <sonar.password>admin123</sonar.password>
 
   </properties>
 
