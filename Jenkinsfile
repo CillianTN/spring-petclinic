@@ -30,11 +30,16 @@ pipeline {
             }
         }
 
-       // stage('Ansible') {
-         //   steps {
-                // 
-          //  }
-        //}
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarQubeScanner'
+                    withSonarQubeEnv('SonarQube') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
 
         stage('Deploy to Tomcat') {
             steps {
